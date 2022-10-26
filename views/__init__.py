@@ -1,6 +1,15 @@
 from .user_requests import (
     login_user,
     create_user,
+    get_all_users,
+    get_single_user,
 )
 
-from .post_requests import get_all_posts
+from .post_requests import (
+    get_all_posts,
+)
+
+from .tag_requests import (
+    get_all_tags, 
+    get_single_tag,
+)
