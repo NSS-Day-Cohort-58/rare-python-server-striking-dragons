@@ -23,7 +23,7 @@ def get_all_posts():
             p.approved,
             p.publication_date,
             p.updated_date
-        FROM Post p
+        FROM Posts p
         """)
 
         posts = []

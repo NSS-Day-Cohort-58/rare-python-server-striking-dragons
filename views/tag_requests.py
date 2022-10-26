@@ -15,7 +15,7 @@ def get_all_tags():
     SELECT
       t.id,
       t.label
-    FROM Tag t
+    FROM Tags t
       """
         )
 
@@ -43,7 +43,7 @@ def get_single_tag(id):
         SELECT
           t.id,
           t.label
-        FROM Tag t
+        FROM Tags t
         WHERE t.id = ?
           """,
             (id,),
