@@ -239,4 +239,4 @@ insert into PostTags (id, post_id, tag_id) values (38, 18, 5);
 insert into PostTags (id, post_id, tag_id) values (39, 1, 2);
 insert into PostTags (id, post_id, tag_id) values (40, 24, 2);
 
-DROP TABLE Users;
+DROP TABLE Tags;
