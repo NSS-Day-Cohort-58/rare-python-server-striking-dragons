@@ -29,6 +29,6 @@ def get_all_tags():
 
           tags.append(tag.__dict__)
 
-        return json.dumps(tags)
+        return tags
 
       
