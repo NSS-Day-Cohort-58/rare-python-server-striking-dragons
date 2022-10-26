@@ -153,3 +153,4 @@ cython_debug/
 
 *.sqlite3
 *.pylintrc
+settings.json
