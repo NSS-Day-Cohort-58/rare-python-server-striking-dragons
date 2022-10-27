@@ -27,7 +27,7 @@ def get_all_comments():
 
         for row in dataset:
 
-            tag = Comment(row["id"], row["author_id"], row["post_id"], row["content"])
+            comment = Comment(row["id"], row["author_id"], row["post_id"], row["content"])
 
             comments.append(comment.__dict__)
 
