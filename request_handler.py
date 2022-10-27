@@ -3,7 +3,8 @@ import json
 
 from views import (create_user, login_user,)
 from models import User
-from views import get_all_categories, get_single_category
+from views import (get_all_categories, get_single_category,)
+from views import (get_all_post_tags, get_single_post_tag,)
 
 
 class HandleRequests(BaseHTTPRequestHandler):
@@ -67,6 +68,18 @@ class HandleRequests(BaseHTTPRequestHandler):
             else:
                 self._set_headers(200)
                 response = get_all_categories()
+
+        if resource == "PostTags":
+            if id is not None:
+                response = get_single_post_tag(id)
+                if response is not None:
+                    self._set_headers(200)
+                else:
+                    self._set_headers(404)
+                    response = {"message": f"Cannot compute request on {id}. Please try again."}
+            else:
+                self._set_headers(200)
+                response = get_all_post_tags()
 
         self.wfile.write(json.dumps(response).encode())
 
