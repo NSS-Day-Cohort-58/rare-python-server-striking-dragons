@@ -23,7 +23,7 @@ def get_all_posts():
             p.approved,
             p.publication_date,
             p.updated_date
-        FROM Post p
+        FROM Posts p
         """)
 
         posts = []
@@ -56,7 +56,7 @@ def get_single_post(id):
             p.approved,
             p.publication_date,
             p.updated_date
-        FROM Post p
+        FROM Posts p
         """, (id, ))
 
         # Load the single result into memory
@@ -73,7 +73,7 @@ def create_post(new_post):
         db_cursor = conn.cursor()
 
         db_cursor.execute("""
-        INSERT INTO post
+        INSERT INTO posts
             (id,
             title,
             user_id,
