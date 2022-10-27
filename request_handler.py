@@ -1,11 +1,24 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import json
 
-from views import (create_user, login_user,)
+from views import (
+    create_user,
+    login_user,
+)
 from models import User
-from views import (get_all_categories, get_single_category,)
-from views import (get_all_post_tags, get_single_post_tag,)
-from views import (get_all_comments, get_single_comment, create_comment,)
+from views import (
+    get_all_categories,
+    get_single_category,
+)
+from views import (
+    get_all_post_tags,
+    get_single_post_tag,
+)
+from views import (
+    get_all_comments,
+    get_single_comment,
+    create_comment,
+)
 
 
 class HandleRequests(BaseHTTPRequestHandler):
@@ -65,7 +78,9 @@ class HandleRequests(BaseHTTPRequestHandler):
                 else:
                     # if id = none then run this else function
                     self._set_headers(404)
-                    response = {"message": f"Cannot compute request on {id}. Please try again."}
+                    response = {
+                        "message": f"Cannot compute request on {id}. Please try again."
+                    }
             else:
                 self._set_headers(200)
                 response = get_all_categories()
@@ -77,7 +92,9 @@ class HandleRequests(BaseHTTPRequestHandler):
                     self._set_headers(200)
                 else:
                     self._set_headers(404)
-                    response = {"message": f"Cannot compute request on {id}. Please try again."}
+                    response = {
+                        "message": f"Cannot compute request on {id}. Please try again."
+                    }
             else:
                 self._set_headers(200)
                 response = get_all_post_tags()
@@ -89,7 +106,9 @@ class HandleRequests(BaseHTTPRequestHandler):
                     self._set_headers(200)
                 else:
                     self._set_headers(404)
-                    response = {"message": f"Cannot compute request on {id}. Please try again."}
+                    response = {
+                        "message": f"Cannot compute request on {id}. Please try again."
+                    }
             else:
                 self._set_headers(200)
                 response = get_all_comments()
@@ -108,6 +127,28 @@ class HandleRequests(BaseHTTPRequestHandler):
             response = login_user(post_body)
         if resource == "register":
             response = create_user(post_body)
+
+        if resource == "categories":
+            if "label" in post_body:
+                self._set_headers(201)
+                new_category = create_category(post_body)
+            else:
+                self._set_headers(400)
+                new_category = {
+                    "message": f'{"label is required" if "label" not in post_body else ""}'
+                }
+            self.wfile.write(json.dumps(new_category).encode())
+
+        if resource == "subscriptions":
+            if "follower_id" in post_body and "author_id" in post_body:
+                self._set_headers(201)
+                new_subscription = create_subscription(post_body)
+            else:
+                self._set_headers(400)
+                new_subscription = {
+                    "message": f'{"follower_id is required" if "follower_id" not in post_body else ""} {"author_id is required" if "author_id" not in post_body else ""}'
+                }
+            self.wfile.write(json.dumps(new_subscription).encode())
 
         self.wfile.write(response.encode())
 
