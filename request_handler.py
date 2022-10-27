@@ -1,8 +1,12 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import json
 
-from views import (create_user, login_user,)
+from views import (create_user, login_user, get_single_user, get_all_users)
 from models import User
+from models import Category
+from models import Post_tag
+from models import Comment
+
 from views import (get_all_categories, get_single_category,)
 from views import (get_all_post_tags, get_single_post_tag,)
 from views import (get_all_comments, get_single_comment, create_comment,)
@@ -93,6 +97,18 @@ class HandleRequests(BaseHTTPRequestHandler):
             else:
                 self._set_headers(200)
                 response = get_all_comments()
+
+        if resource == "users":
+            if id is not None:
+                response = get_single_user(id)
+                if response is not None:
+                    self._set_headers(200)
+                else:
+                    self._set_headers(404)
+                    response = {"message": f"Cannot compute request on {id}. Please try again."}
+            else:
+                self._set_headers(200)
+                response = get_all_users()
 
         self.wfile.write(json.dumps(response).encode())
 
