@@ -62,7 +62,7 @@ def create_subscription(new_subscription):
           ( ?, ? );
           """,
           (
-            new_comment["follower_id"], new_comment["author_id"]
+            new_subscription["follower_id"], new_subscription["author_id"]
           ),
         )
 
