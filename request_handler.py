@@ -2,7 +2,7 @@ from http.server import BaseHTTPRequestHandler, HTTPServer
 import json
 
 from views import (create_user, login_user,)
-from models import User 
+from models import User
 
 
 class HandleRequests(BaseHTTPRequestHandler):
