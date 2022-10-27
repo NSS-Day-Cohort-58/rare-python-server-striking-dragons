@@ -41,7 +41,9 @@ def get_single_subscription(id):
 
     data = db_cursor.fetchone()
 
+    if data is not None:
+        subscription = Subscription(data['id'], data['follower_id'], data['author_id'])
 
-    subscription = Subscription(data['id'], data['follower_id'], data['author_id'])
-
-    return subscription.__dict__
+        return subscription.__dict__
+    else: 
+        return None

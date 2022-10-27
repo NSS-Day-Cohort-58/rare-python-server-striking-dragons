@@ -10,6 +10,9 @@ from models import Comment
 from views import (get_all_categories, get_single_category,)
 from views import (get_all_post_tags, get_single_post_tag,)
 from views import (get_all_comments, get_single_comment, create_comment,)
+from views import (get_all_posts, get_single_post, create_post, delete_post)
+from views import (get_single_subscription, get_all_subscriptions,)
+from views import (get_single_tag, get_all_tags,)
 
 
 class HandleRequests(BaseHTTPRequestHandler):
@@ -109,6 +112,42 @@ class HandleRequests(BaseHTTPRequestHandler):
             else:
                 self._set_headers(200)
                 response = get_all_users()
+
+        if resource == "posts":
+            if id is not None:
+                response = get_single_post(id)
+                if response is not None:
+                    self._set_headers(200)
+                else:
+                    self._set_headers(404)
+                    response = {"message": f"Cannot compute request on {id}. Please try again."}
+            else:
+                self._set_headers(200)
+                response = get_all_posts()
+
+        if resource == "subscriptions":
+            if id is not None:
+                response = get_single_subscription(id)
+                if response is not None:
+                    self._set_headers(200)
+                else:
+                    self._set_headers(404)
+                    response = {"message": f"Cannot compute request on {id}. Please try again."}
+            else:
+                self._set_headers(200)
+                response = get_all_subscriptions()
+
+        if resource == "tags":
+            if id is not None:
+                response = get_single_tag(id)
+                if response is not None:
+                    self._set_headers(200)
+                else:
+                    self._set_headers(404)
+                    response = {"message": f"Cannot compute request on {id}. Please try again."}
+            else:
+                self._set_headers(200)
+                response = get_all_tags()
 
         self.wfile.write(json.dumps(response).encode())
 
