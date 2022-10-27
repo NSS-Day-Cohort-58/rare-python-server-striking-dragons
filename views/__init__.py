@@ -5,13 +5,14 @@ from .user_requests import (
     get_single_user,
 )
 
-from .post_requests import get_all_posts
-
 from .category_requests import get_all_categories, get_single_category
+
 from .post_requests import (
+    delete_post,
     get_all_posts,
     get_single_post, 
-    create_post
+    create_post,
+    delete_post
 )
 
 from .tag_requests import (
