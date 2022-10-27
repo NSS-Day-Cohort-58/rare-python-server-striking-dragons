@@ -2,7 +2,8 @@ from http.server import BaseHTTPRequestHandler, HTTPServer
 import json
 
 from views import (create_user, login_user,)
-from models import User 
+from models import User
+from views import get_all_categories, get_single_category
 
 
 class HandleRequests(BaseHTTPRequestHandler):
@@ -50,8 +51,24 @@ class HandleRequests(BaseHTTPRequestHandler):
         self.end_headers()
 
     def do_GET(self):
-        """Handle Get requests to the server"""
-        pass
+        response = {}
+
+        (resource, id) = self.parse_url()
+
+        if resource == "categories":
+            if id is not None:
+                response = get_single_category(id)
+                if response is not None:
+                    self._set_headers(200)
+                else:
+                    # if id = none then run this else function
+                    self._set_headers(404)
+                    response = {"message": f"Cannot compute request on {id}. Please try again."}
+            else:
+                self._set_headers(200)
+                response = get_all_categories()
+
+        self.wfile.write(json.dumps(response).encode())
 
     def do_POST(self):
         """Make a post request to the server"""
