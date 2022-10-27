@@ -26,3 +26,9 @@ from .post_tag_requests import (
     get_all_post_tags,
     get_single_post_tag,
 )
+
+from .comment_requests import (
+    get_all_comments,
+    get_single_comment,
+    create_comment,
+)
