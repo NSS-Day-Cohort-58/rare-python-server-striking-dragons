@@ -80,21 +80,19 @@ def get_all_users():
         conn.row_factory = sqlite3.Row
         db_cursor = conn.cursor()
 
-        db_cursor.execute(
-            """
-    SELECT
-        u.id,
-        u.username,
-        u.first_name,
-        u.last_name,
-        u.email,
-        u.password,
-        u.profile_image_url,
-        u.bio,
-        u.created_on
-    FROM Users u
-      """
-        )
+        db_cursor.execute("""
+        SELECT
+            u.id,
+            u.username,
+            u.first_name,
+            u.last_name,
+            u.email,
+            u.password,
+            u.profile_image_url,
+            u.bio,
+            u.created_on
+        FROM Users u
+        """)
 
         users = []
 
@@ -111,7 +109,7 @@ def get_all_users():
                 row["password"],
                 row["profile_image_url"],
                 row["bio"],
-                row["created_on)"]
+                row["created_on"]
             )
 
             users.append(user.__dict__)
@@ -125,8 +123,7 @@ def get_single_user(id):
         conn.row_factory = sqlite3.Row
         db_cursor = conn.cursor()
 
-        db_cursor.execute(
-            """
+        db_cursor.execute("""
         SELECT
             u.id,
             u.username,
@@ -139,13 +136,12 @@ def get_single_user(id):
             u.created_on
         FROM Users u
         WHERE u.id = ?
-          """,
-            (id,),
-        )
+        """, (id,))
 
         data = db_cursor.fetchone()
 
-        user = User(
+        if data is not None:
+            user = User(
                 data["id"],
                 data["username"],
                 data["first_name"],
@@ -154,7 +150,8 @@ def get_single_user(id):
                 data["password"],
                 data["profile_image_url"],
                 data["bio"],
-                data["created_on)"]
+                data["created_on"]
             )
-
-        return user.__dict__
+            return user.__dict__
+        else:
+            return None
