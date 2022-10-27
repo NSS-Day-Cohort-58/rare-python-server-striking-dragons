@@ -15,7 +15,6 @@ from .post_requests import (
     get_all_posts,
     get_single_post, 
     create_post,
-    delete_post
 )
 
 from .tag_requests import (
@@ -26,4 +25,10 @@ from .tag_requests import (
 from .post_tag_requests import (
     get_all_post_tags,
     get_single_post_tag,
+)
+
+from .comment_requests import (
+    get_all_comments,
+    get_single_comment,
+    create_comment,
 )

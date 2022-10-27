@@ -11,7 +11,7 @@ def get_all_post_tags():
         SELECT
             pt.id,
             pt.post_id,
-            pt. tag_id
+            pt.tag_id
         FROM PostTags pt
         """)
 
