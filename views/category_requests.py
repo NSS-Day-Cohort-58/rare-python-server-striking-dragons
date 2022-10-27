@@ -34,10 +34,14 @@ def get_single_category(id):
             ca.id,
             ca.label
         FROM Categories ca
-        """)
+        WHERE ca.id = ?
+        """, (id,))
 
     data = db_cursor.fetchone()
 
-    category = Category(data['id'], data['label'])
-
-    return category.__dict__
+    if data is not None:
+        category = Category(data['id'], data['label'])
+    # need category to also equal None if no data exists
+        return category.__dict__
+    else:
+        return None

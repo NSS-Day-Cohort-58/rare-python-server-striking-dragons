@@ -61,8 +61,9 @@ class HandleRequests(BaseHTTPRequestHandler):
                 if response is not None:
                     self._set_headers(200)
                 else:
+                    # if id = none then run this else function
                     self._set_headers(404)
-                    response = {"message": "Cannot compute request. Please try again."}
+                    response = {"message": f"Cannot compute request on {id}. Please try again."}
             else:
                 self._set_headers(200)
                 response = get_all_categories()
