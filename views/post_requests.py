@@ -57,16 +57,20 @@ def get_single_post(id):
             p.publication_date,
             p.updated_date
         FROM Posts p
+        WHERE p.id = ?
         """, (id, ))
 
         # Load the single result into memory
         data = db_cursor.fetchone()
 
-        # Create an post instance from the current row
-        post = Post(data['id'], data['title'], data['user_id'], data['category_id'], data['tag_id'], data['image_url'], 
+        if data is not None:
+            post = Post(data['id'], data['title'], data['user_id'], data['category_id'], data['tag_id'], data['image_url'], 
                         data['content'], data['approved'], data['publication_date'], data['updated_date'])
 
-        return post.__dict__
+            return post.__dict__
+        
+        else:
+            return None
 
 def create_post(new_post):
     with sqlite3.connect("./db.sqlite3") as conn:
@@ -85,7 +89,7 @@ def create_post(new_post):
             publication_date,
             updated_date)
         VALUES
-            ( ?, ?, ?, ?, ?,);
+            ( ?, ?, ?, ?, ?, ?, ?, ?, ?);
         """, (new_post['id'], new_post['title'], new_post['user_id'], new_post['category_id'], new_post['tag_id'], new_post['image_url'], 
                         new_post['content'], new_post['approved'], new_post['publication_date'], new_post['updated_date'], ))
 

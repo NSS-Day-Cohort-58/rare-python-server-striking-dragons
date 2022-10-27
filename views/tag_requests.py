@@ -51,9 +51,12 @@ def get_single_tag(id):
 
         data = db_cursor.fetchone()
 
-        tag = Tag(data['id'], data['label'])
+        if data is not None:
+          tag = Tag(data['id'], data['label'])
 
-        return tag.__dict__
+          return tag.__dict__
+        else:
+          return None
 
 def create_tag(new_tag):
   with sqlite3.connect("./db.sqlite3") as conn:

@@ -49,11 +49,15 @@ def get_single_comment(id):
 
         data = db_cursor.fetchone()
 
-        comment = Comment(
+        if data is not None:
+          comment = Comment(
             data["id"], data["author_id"], data["post_id"], data["content"]
         )
 
-        return comment.__dict__
+          return comment.__dict__
+          
+        else:
+          return None
 
 
 def create_comment(new_comment):
